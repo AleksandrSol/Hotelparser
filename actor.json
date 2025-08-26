@@ -1,0 +1,64 @@
+{
+  "actorSpecification": 1,
+  "name": "hotel-pipeline",
+  "title": "Hotels pipeline (from Sheets via n8n)",
+  "description": "Accepts rows array from n8n (Google Sheets), normalizes and outputs items to default dataset.",
+  "version": "0.1",
+  "dockerfile": "./Dockerfile",
+  "meta": { "templateId": "js-playwright" },
+  "input": {
+    "schemaVersion": 1,
+    "title": "Hotels input",
+    "description": "Rows with hotel data and optional crawl flags.",
+    "type": "object",
+    "properties": {
+      "rows": {
+        "title": "Rows from sheet",
+        "description": "Array of hotel rows coming from n8n Function node",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "title": "Row",
+          "description": "Single hotel row",
+          "properties": {
+            "rowRef":   { "type": "string", "title": "Row reference", "description": "Any reference to original row (e.g., row_number or hotelid)" },
+            "hotelid":  { "type": "string", "title": "Internal HotelId", "description": "Your internal hotel id (optional)" },
+            "name":     { "type": "string", "title": "Hotel name", "description": "Hotel name as in the sheet" },
+            "stars":    { "type": "string", "title": "Stars", "description": "Star rating string, e.g. 5*" },
+            "country":  { "type": "string", "title": "Country", "description": "Country label from the sheet" },
+            "resort":   { "type": "string", "title": "Resort", "description": "Resort/city label from the sheet" },
+            "id":       { "type": "string", "title": "Operator Hotel ID", "description": "Operator-side hotel id from the sheet (required)" },
+            "operator": { "type": "string", "title": "Operator URL", "description": "Operator base URL, e.g. https://www.coraltravel.ua/", "format": "uri" }
+          },
+          "required": ["name", "id", "operator"]
+        }
+      },
+      "useProxy": {
+        "type": "boolean",
+        "title": "Use Apify Proxy",
+        "description": "Use Apify Proxy for crawling",
+        "default": true
+      },
+      "proxyCountry": {
+        "type": "string",
+        "title": "Proxy country",
+        "description": "Country code for Apify Proxy routing",
+        "default": "DE"
+      },
+      "resolveStrategy": {
+        "type": "string",
+        "title": "Resolve strategy",
+        "description": "How to resolve hotel detail page (auto/id/search)",
+        "enum": ["auto", "id", "search"],
+        "default": "auto"
+      },
+      "maxHotels": {
+        "type": "integer",
+        "title": "Max hotels",
+        "description": "Cap number of rows to process",
+        "default": 200
+      }
+    },
+    "required": ["rows"]
+  }
+}

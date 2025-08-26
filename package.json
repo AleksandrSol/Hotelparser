@@ -1,0 +1,14 @@
+{
+  "name": "hotel-pipeline",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Echo pipeline to verify n8n → Apify → n8n loop",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "apify": "^3.0.0",
+    "crawlee": "^3.8.0"
+  }
+}
