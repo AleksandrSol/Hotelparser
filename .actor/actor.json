@@ -4,7 +4,7 @@
   "title": "Hotels pipeline (from Sheets via n8n)",
   "description": "Accepts rows array from n8n (Google Sheets), normalizes and outputs items to default dataset.",
   "version": "0.1",
-  "dockerfile": "./Dockerfile",
+  "dockerfile": "../Dockerfile",
   "meta": { "templateId": "js-playwright" },
   "input": {
     "schemaVersion": 1,
